@@ -11,3 +11,6 @@ out
 *.patch
 ant.properties
 *.txt
+/app/build/
+.gradle/
+build/*
