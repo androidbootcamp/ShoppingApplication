@@ -52,9 +52,11 @@ public class ShoppingItemsListingActivity extends Activity {
       }
     };
   }
+
   private void renderProducts(RecyclerView recyclerView, ArrayList<Product> products) {
     recyclerView.setAdapter(new ShoppingItemsListAdapter(products));
     recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+
   }
 
 }

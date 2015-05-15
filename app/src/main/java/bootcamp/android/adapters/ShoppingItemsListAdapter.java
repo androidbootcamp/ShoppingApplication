@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidplugins.Callback;
@@ -19,12 +20,14 @@ import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
 
+import static bootcamp.android.constants.Constants.CURRENT_PRODUCT_KEY;
 import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
+import static bootcamp.android.constants.Constants.PRODUCTS_KEY;
 
 public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
-  private List<Product> products;
+  private ArrayList<Product> products;
 
-  public ShoppingItemsListAdapter(List<Product> products) {
+  public ShoppingItemsListAdapter(ArrayList<Product> products) {
     this.products = products;
   }
 
@@ -73,8 +76,8 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
     public void onClick(View view) {
       Context context = view.getContext();
       Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
-      Product product = products.get(getAdapterPosition());
-      intent.putExtra(Constants.PRODUCT_KEY, product);
+      intent.putParcelableArrayListExtra(PRODUCTS_KEY, products);
+      intent.putExtra(CURRENT_PRODUCT_KEY, getAdapterPosition());
       context.startActivity(intent);
 
     }
