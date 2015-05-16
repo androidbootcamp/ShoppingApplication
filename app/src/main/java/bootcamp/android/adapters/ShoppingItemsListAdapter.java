@@ -74,9 +74,7 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
       Context context = view.getContext();
       Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
       Product product = products.get(getAdapterPosition());
-      intent.putExtra(Constants.TITLE_KEY, product.getTitle());
-      intent.putExtra(Constants.DESCRIPTION_KEY, product.getDescription());
-      intent.putExtra(IMAGE_URL_KEY, product.getImageUrl());
+      intent.putExtra(Constants.PRODUCT_KEY, product);
       context.startActivity(intent);
 
     }

@@ -14,7 +14,7 @@ import bootcamp.android.adapters.ShoppingItemsListAdapter;
 import bootcamp.android.models.Product;
 import bootcamp.android.repositories.ProductRepository;
 
-import static bootcamp.android.constants.Constants.PRODUCTS_KEY;
+import static bootcamp.android.constants.Constants.*;
 
 public class ShoppingItemsListingActivity extends Activity {
 
