@@ -2,36 +2,43 @@ package bootcamp.android.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import bootcamp.android.R;
+import bootcamp.android.models.Product;
 
-import static bootcamp.android.constants.Constants.DESCRIPTION_KEY;
-import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
-import static bootcamp.android.constants.Constants.TITLE_KEY;
+import static bootcamp.android.constants.Constants.*;
+
 
 public class ProductDetailsActivity extends Activity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.product_details);
-    Bundle extras = getIntent().getExtras();
-    String title = extras.getString(TITLE_KEY);
-    String description = extras.getString(DESCRIPTION_KEY);
-    String imageUrl = extras.getString(IMAGE_URL_KEY);
+    setContentView(R.layout.product_details_container);
 
-    TextView imageTitle = (TextView) findViewById(R.id.product_title);
-    imageTitle.setText(title);
+    Bundle extraArguments = getIntent().getExtras();
+    ViewGroup parent = (ViewGroup) findViewById(R.id.product_details_container);
+    parent.addView(getPopulatedView(getLayoutInflater(), parent, extraArguments));
+  }
 
-    TextView issueDescription = (TextView) findViewById(R.id.product_description);
-    issueDescription.setText(description);
 
+  private View getPopulatedView(LayoutInflater layoutInflater, ViewGroup parent, Bundle extraArguments) {
+    View productDetailsView = layoutInflater.inflate(R.layout.product_details, parent, false);
+    Product product = extraArguments.getParcelable(PRODUCT_KEY);
+    TextView imageTitle = (TextView) productDetailsView.findViewById(R.id.product_title);
+    imageTitle.setText(product.getTitle());
     ImageView imageView = (ImageView) findViewById(R.id.product_image);
-    Picasso.get().load(imageUrl).into(imageView);
+    Picasso.get().load(product.getImageUrl()).into(imageView);
+    TextView issueDescription = (TextView) productDetailsView.findViewById(R.id.product_description);
+    issueDescription.setText(product.getDescription());
+    return productDetailsView;
   }
 
 }

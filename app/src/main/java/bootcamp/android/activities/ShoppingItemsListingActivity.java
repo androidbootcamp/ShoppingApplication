@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static bootcamp.android.constants.Constants.PRODUCTS_KEY;
+import static bootcamp.android.constants.Constants.*;
 
 public class ShoppingItemsListingActivity extends Activity {
 
