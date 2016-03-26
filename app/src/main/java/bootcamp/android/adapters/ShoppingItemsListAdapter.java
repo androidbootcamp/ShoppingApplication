@@ -1,56 +1,51 @@
 package bootcamp.android.adapters;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import bootcamp.android.R;
 import bootcamp.android.models.Product;
 
-public class ShoppingItemsListAdapter extends BaseAdapter {
-  private final Context context;
-  public List<Product> products = new ArrayList<>();
+public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
+  private List<Product> products;
 
-  public ShoppingItemsListAdapter(Context context, List<Product> products){
-    this.context = context;
+  public ShoppingItemsListAdapter(List<Product> products) {
     this.products = products;
   }
 
   @Override
-  public int getCount() {
+  public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View productItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product, parent, false);
+    return new ShoppingItemViewHolder(productItemView);
+  }
+
+  @Override
+  public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
+    Product product = products.get(position);
+    holder.titleView.setText(product.getTitle());
+    holder.imageView.setImageResource(product.getDrawable());
+  }
+
+  @Override
+  public int getItemCount() {
     return products.size();
   }
 
-  @Override
-  public Object getItem(int position) {
-    return products.get(position);
-  }
+  public class ShoppingItemViewHolder extends RecyclerView.ViewHolder{
 
-  @Override
-  public long getItemId(int position) {
-    return 0;
-  }
+    private final TextView titleView;
+    private final ImageView imageView;
 
-
-  @Override
-  public View getView(int position, View convertView, ViewGroup parent) {
-    if(convertView == null) {
-      convertView = LayoutInflater.from(context).inflate(R.layout.product, parent, false);
+    public ShoppingItemViewHolder(View itemView) {
+      super(itemView);
+      titleView = (TextView) itemView.findViewById(R.id.title);
+      imageView = (ImageView) itemView.findViewById(R.id.imageView);
     }
-    ImageView imageView = (ImageView) convertView.findViewById(R.id.imageView);
-    TextView titleTextView = (TextView) convertView.findViewById(R.id.title);
-    Product product = products.get(position);
-    titleTextView.setText(product.getTitle());
-    imageView.setImageResource(product.getDrawable());
-
-    return convertView;
   }
-
 }
