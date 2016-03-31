@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidplugins.Callback;
+import androidplugins.imagefetcher.ImageFetcher;
 import bootcamp.android.R;
 import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
-import bootcamp.android.services.ImageDownloader;
 
 import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
 
@@ -37,10 +38,19 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
   public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
     Product product = products.get(position);
     holder.titleView.setText(product.getTitle());
-    ImageDownloader imageDownloader = new ImageDownloader();
-    Bitmap bitmap = imageDownloader.downloadImage(product.getImageUrl());
-    holder.imageView.setImageBitmap(bitmap);
+    ImageFetcher imageFetcher = new ImageFetcher(bitmapCallback(holder.imageView), holder.imageView.getContext());
+    imageFetcher.execute(product.getImageUrl());
   }
+
+  private Callback<Bitmap> bitmapCallback(final ImageView imageView) {
+    return new Callback<Bitmap>() {
+      @Override
+      public void execute(Bitmap object) {
+        imageView.setImageBitmap(object);
+      }
+    };
+  }
+
 
   @Override
   public int getItemCount() {

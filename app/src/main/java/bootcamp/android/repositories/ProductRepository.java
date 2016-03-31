@@ -1,15 +1,24 @@
 package bootcamp.android.repositories;
 
-import java.util.List;
+import java.util.ArrayList;
 
+import androidplugins.Callback;
 import bootcamp.android.models.Product;
-import bootcamp.android.services.ContentDownloader;
 import bootcamp.android.services.ProductsParser;
 
 public class ProductRepository {
 
-  public List<Product> getProducts() {
-    String strJSONData = new ContentDownloader().fetchResponse("https://androidbootcamp.github.io/staticcontent/shoppingapplication/products_json.json");
-    return new ProductsParser().parseProducts(strJSONData);
+  public void getProducts(Callback<ArrayList<Product>> productsCallback) {
+    new androidplugins.contentfetcher.ContentFetcher(responseCallback(productsCallback), "GET").execute("https://androidbootcamp.github.io/staticcontent/shoppingapplication/products_json.json");
   }
+
+  private Callback<String> responseCallback(final Callback<ArrayList<Product>> productsCallback) {
+    return new Callback<String>() {
+      @Override
+      public void execute(String strJSONData) {
+        productsCallback.execute(new ProductsParser().parseProducts(strJSONData));
+      }
+    };
+  }
+
 }
