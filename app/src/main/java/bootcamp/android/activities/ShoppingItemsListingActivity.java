@@ -1,6 +1,7 @@
 package bootcamp.android.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +16,8 @@ import bootcamp.android.repositories.ProductRepository;
 
 public class ShoppingItemsListingActivity extends Activity {
 
+  private List<Product> products;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -23,11 +26,15 @@ public class ShoppingItemsListingActivity extends Activity {
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
     StrictMode.setThreadPolicy(policy);
 
+    ProgressDialog progressDialog = ProgressDialog.show(this, "", "Loading...", true, true);
+
     ProductRepository productRepository = new ProductRepository();
-    List<Product> products = productRepository.getProducts();
+    products = productRepository.getProducts();
+
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    recyclerView.setAdapter(new ShoppingItemsListAdapter(products));
     recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-    ShoppingItemsListAdapter productArrayAdapter = new ShoppingItemsListAdapter(products);
-    recyclerView.setAdapter(productArrayAdapter);
+
+    progressDialog.dismiss();
   }
 }
