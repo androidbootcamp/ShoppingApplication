@@ -2,6 +2,7 @@ package bootcamp.android.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import bootcamp.android.R;
 import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
+import bootcamp.android.services.ImageDownloader;
+
+import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
 
 public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
   private List<Product> products;
@@ -33,7 +37,9 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
   public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
     Product product = products.get(position);
     holder.titleView.setText(product.getTitle());
-    holder.imageView.setImageResource(product.getDrawable());
+    ImageDownloader imageDownloader = new ImageDownloader();
+    Bitmap bitmap = imageDownloader.downloadImage(product.getImageUrl());
+    holder.imageView.setImageBitmap(bitmap);
   }
 
   @Override
@@ -60,7 +66,7 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
       Product product = products.get(getAdapterPosition());
       intent.putExtra(Constants.TITLE_KEY, product.getTitle());
       intent.putExtra(Constants.DESCRIPTION_KEY, product.getDescription());
-      intent.putExtra(Constants.DRAWABLE_KEY, product.getDrawable());
+      intent.putExtra(IMAGE_URL_KEY, product.getImageUrl());
       context.startActivity(intent);
 
     }
