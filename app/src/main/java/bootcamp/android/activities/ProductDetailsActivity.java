@@ -1,13 +1,13 @@
 package bootcamp.android.activities;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import bootcamp.android.R;
-import bootcamp.android.services.ImageDownloader;
 
 import static bootcamp.android.constants.Constants.DESCRIPTION_KEY;
 import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
@@ -31,9 +31,7 @@ public class ProductDetailsActivity extends Activity {
     issueDescription.setText(description);
 
     ImageView imageView = (ImageView) findViewById(R.id.product_image);
-    ImageDownloader imageDownloader = new ImageDownloader();
-    Bitmap bitmap = imageDownloader.downloadImage(imageUrl);
-    imageView.setImageBitmap(bitmap);
+    Picasso.get().load(imageUrl).into(imageView);
   }
 
 }

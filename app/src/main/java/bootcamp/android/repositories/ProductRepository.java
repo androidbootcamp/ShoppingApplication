@@ -3,13 +3,29 @@ package bootcamp.android.repositories;
 import java.util.List;
 
 import bootcamp.android.models.Product;
-import bootcamp.android.services.ContentDownloader;
-import bootcamp.android.services.ProductsParser;
+import bootcamp.android.networking.ContentDownloader;
+import bootcamp.android.networking.ProductsParser;
+import bootcamp.android.networking.RetrofitCore;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.http.GET;
 
 public class ProductRepository {
 
-  public List<Product> getProducts() {
+  ProductRequester productRequester = new RetrofitCore().create(ProductRequester.class);
+
+  public List<Product> getProductsSync() {
     String strJSONData = new ContentDownloader().fetchResponse("https://androidbootcamp.github.io/staticcontent/shoppingapplication/products_json.json");
     return new ProductsParser().parseProducts(strJSONData);
+  }
+
+  public void getProducts(Callback<List<Product>> callback){
+    Call<List<Product>> productsCall = productRequester.products();
+    productsCall.enqueue(callback);
+  }
+
+
+  interface ProductRequester{
+    @GET("products_json.json") Call<List<Product>> products();
   }
 }

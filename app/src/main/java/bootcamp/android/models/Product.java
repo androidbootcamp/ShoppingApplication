@@ -1,10 +1,12 @@
 package bootcamp.android.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Product {
 
   private String title;
   private String description;
-  private String imageUrl;
+  @SerializedName(value="image_url") private String imageUrl;
 
   public Product(String title, String description, String imageUrl) {
     this.title = title;
