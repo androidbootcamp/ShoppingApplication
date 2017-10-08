@@ -1,7 +1,7 @@
 package bootcamp.android.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,10 @@ import com.squareup.picasso.Picasso;
 import bootcamp.android.R;
 import bootcamp.android.models.Product;
 
-import static bootcamp.android.constants.Constants.*;
+import static bootcamp.android.constants.Constants.PRODUCT_KEY;
 
 
-public class ProductDetailsActivity extends Activity {
+public class ProductDetailsActivity extends FragmentActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
