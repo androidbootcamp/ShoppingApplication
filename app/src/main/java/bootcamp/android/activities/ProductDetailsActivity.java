@@ -1,7 +1,7 @@
 package bootcamp.android.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,10 @@ import com.squareup.picasso.Picasso;
 import bootcamp.android.R;
 import bootcamp.android.models.Product;
 
-import static bootcamp.android.constants.Constants.*;
+import static bootcamp.android.constants.Constants.PRODUCT_KEY;
 
 
-public class ProductDetailsActivity extends Activity {
+public class ProductDetailsActivity extends FragmentActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ProductDetailsActivity extends Activity {
     Product product = extraArguments.getParcelable(PRODUCT_KEY);
     TextView imageTitle = (TextView) productDetailsView.findViewById(R.id.product_title);
     imageTitle.setText(product.getTitle());
-    ImageView imageView = (ImageView) findViewById(R.id.product_image);
+    ImageView imageView = (ImageView) productDetailsView.findViewById(R.id.product_image);
     Picasso.get().load(product.getImageUrl()).into(imageView);
     TextView issueDescription = (TextView) productDetailsView.findViewById(R.id.product_description);
     issueDescription.setText(product.getDescription());
