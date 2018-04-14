@@ -1,45 +1,24 @@
-<LinearLayout
-    android:id="@+id/item"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:background="#ade0ff"
-    android:baselineAligned="true"
-    android:focusableInTouchMode="false"
-    android:orientation="horizontal"
-    android:paddingBottom="2dp"
-    android:paddingTop="2dp">
+<?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:background="#ffffff"
+              android:padding="10dp"
+              android:gravity="center">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:minLines="2"
-            android:padding="2dp"
-            android:text="New Text"
-            android:textColor="#454545"
-            android:textSize="12dp"/>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/title"
+      android:layout_gravity="center|top"
+      android:textColor="#000000"
+      />
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:maxLines="2"
-            android:padding="2dp"
-            android:text="New Text"
-            android:textColor="#454545"
-            android:textSize="12dp"/>
-    </LinearLayout>
+    <ImageView
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:id="@+id/imageView"
+      android:scaleType="fitXY"/>
 </LinearLayout>
