@@ -2,7 +2,6 @@ package bootcamp.android.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import bootcamp.android.R;
 import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
-import bootcamp.android.services.ImageDownloader;
 
 import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
 
@@ -37,9 +37,7 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
   public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
     Product product = products.get(position);
     holder.titleView.setText(product.getTitle());
-    ImageDownloader imageDownloader = new ImageDownloader();
-    Bitmap bitmap = imageDownloader.downloadImage(product.getImageUrl());
-    holder.imageView.setImageBitmap(bitmap);
+    Picasso.with(holder.imageView.getContext()).load(product.getImageUrl()).into(holder.imageView);
   }
 
   @Override

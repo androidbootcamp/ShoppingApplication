@@ -1,4 +1,4 @@
-package bootcamp.android.services;
+package bootcamp.android.networking;
 
 import java.io.IOException;
 
