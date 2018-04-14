@@ -27,8 +27,6 @@ public class ShoppingItemsListingActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-    StrictMode.setThreadPolicy(policy);
 
     final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Loading...", true, true);
 
@@ -44,7 +42,7 @@ public class ShoppingItemsListingActivity extends Activity {
       @Override
       public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
         products = response.body();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new ShoppingItemsListAdapter(products));
         recyclerView.setLayoutManager(new GridLayoutManager(ShoppingItemsListingActivity.this, 3));
         progressDialog.dismiss();
