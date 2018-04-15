@@ -1,5 +1,6 @@
 package bootcamp.android.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bootcamp.android.models.Product;
@@ -19,13 +20,13 @@ public class ProductRepository {
     return new ProductsParser().parseProducts(strJSONData);
   }
 
-  public void getProducts(Callback<List<Product>> callback){
-    Call<List<Product>> productsCall = productRequester.products();
+  public void getProducts(Callback<ArrayList<Product>> callback){
+    Call<ArrayList<Product>> productsCall = productRequester.products();
     productsCall.enqueue(callback);
   }
 
 
   interface ProductRequester{
-    @GET("products_json.json") Call<List<Product>> products();
+    @GET("products_json.json") Call<ArrayList<Product>> products();
   }
 }
