@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bootcamp.android.R;
@@ -18,10 +19,10 @@ import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
 
-public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
-  private List<Product> products;
+public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder> {
+  private ArrayList<Product> products;
 
-  public ShoppingItemsListAdapter(List<Product> products) {
+  public ShoppingItemsListAdapter(ArrayList<Product> products) {
     this.products = products;
   }
 
@@ -59,10 +60,9 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
     public void onClick(View view) {
       Context context = view.getContext();
       Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
-      Product product = products.get(getAdapterPosition());
-      intent.putExtra(Constants.PRODUCT_KEY, product);
+      intent.putExtra(Constants.INDEX, getAdapterPosition());
+      intent.putExtra(Constants.PRODUCTS_KEY, products);
       context.startActivity(intent);
-
     }
   }
 }
