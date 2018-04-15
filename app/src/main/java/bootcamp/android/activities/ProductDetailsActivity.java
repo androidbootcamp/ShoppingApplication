@@ -2,19 +2,14 @@ package bootcamp.android.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v4.view.ViewPager;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 import bootcamp.android.R;
+import bootcamp.android.adapters.ProductPagerAdapter;
+import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
-
-import static bootcamp.android.constants.Constants.PRODUCT_KEY;
-
 
 public class ProductDetailsActivity extends FragmentActivity {
 
@@ -22,23 +17,11 @@ public class ProductDetailsActivity extends FragmentActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.product_details_container);
-
-    Bundle extraArguments = getIntent().getExtras();
-    ViewGroup parent = (ViewGroup) findViewById(R.id.product_details_container);
-    parent.addView(getPopulatedView(getLayoutInflater(), parent, extraArguments));
-  }
-
-
-  private View getPopulatedView(LayoutInflater layoutInflater, ViewGroup parent, Bundle extraArguments) {
-    View productDetailsView = layoutInflater.inflate(R.layout.product_details, parent, false);
-    Product product = extraArguments.getParcelable(PRODUCT_KEY);
-    TextView imageTitle = (TextView) productDetailsView.findViewById(R.id.product_title);
-    imageTitle.setText(product.getTitle());
-    ImageView imageView = (ImageView) productDetailsView.findViewById(R.id.product_image);
-    Picasso.get().load(product.getImageUrl()).into(imageView);
-    TextView issueDescription = (TextView) productDetailsView.findViewById(R.id.product_description);
-    issueDescription.setText(product.getDescription());
-    return productDetailsView;
+    ViewPager viewPager = findViewById(R.id.viewpager);
+    int currentIndex = getIntent().getIntExtra(Constants.INDEX, -1);
+    ArrayList<Product> productsList = getIntent().getParcelableArrayListExtra(Constants.PRODUCTS_KEY);
+    viewPager.setAdapter(new ProductPagerAdapter(getSupportFragmentManager(), productsList));
+    viewPager.setCurrentItem(currentIndex);
   }
 
 }
