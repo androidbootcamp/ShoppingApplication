@@ -10,8 +10,8 @@
   <TextView
     android:id="@+id/product_title"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" android:textColor="#000000" android:textStyle="bold"
-    android:textSize="35dip" android:textIsSelectable="false"
+    android:layout_height="wrap_content"
+      style="@style/TitleTextViewStyle"
     android:gravity="center"/>
   <ImageView
     android:id="@+id/product_image"
@@ -24,6 +24,6 @@
     android:id="@+id/product_description"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" android:layout_marginTop="15dip"
-    android:textSize="24dip" android:textColor="#000000"
+    android:textSize="24dip"
     android:singleLine="false" android:gravity="center"/>
 </LinearLayout>
