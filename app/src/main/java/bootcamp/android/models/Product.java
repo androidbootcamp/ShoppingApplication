@@ -2,6 +2,8 @@ package bootcamp.android.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Objects;
+
 public class Product {
 
   private String title;
@@ -29,5 +31,20 @@ public class Product {
   @Override
   public String toString() {
     return title;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Product product = (Product) o;
+    return Objects.equals(title, product.title) &&
+            Objects.equals(description, product.description) &&
+            Objects.equals(imageUrl, product.imageUrl);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(title, description, imageUrl);
   }
 }

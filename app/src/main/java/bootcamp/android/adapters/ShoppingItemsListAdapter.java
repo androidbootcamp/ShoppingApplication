@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import bootcamp.android.R;
-import bootcamp.android.activities.ProductDetailsActivity;
+import bootcamp.android.views.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
 
