@@ -1,7 +1,9 @@
 package bootcamp.android.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +33,10 @@ public class ProductDetailsActivity extends Activity implements ProductDetailsVi
 
   }
 
+  public void addToCart(View view){
+    presenter.addToCart();
+  }
+
   @Override
   public void displayProduct(Product product) {
     TextView imageTitle = (TextView) findViewById(R.id.product_title);
@@ -41,6 +47,16 @@ public class ProductDetailsActivity extends Activity implements ProductDetailsVi
 
     ImageView imageView = (ImageView) findViewById(R.id.product_image);
     Picasso.get().load(product.getImageUrl()).into(imageView);
+  }
+
+  @Override
+  public void sendAddToCartResultAndNavigateToPreviousPage(Product product) {
+    Intent intent = new Intent();
+    intent.putExtra(TITLE_KEY, product.getTitle());
+    intent.putExtra(DESCRIPTION_KEY, product.getDescription());
+    intent.putExtra(IMAGE_URL_KEY, product.getImageUrl());
+    setResult(RESULT_OK, intent);
+    finish();
   }
 
 

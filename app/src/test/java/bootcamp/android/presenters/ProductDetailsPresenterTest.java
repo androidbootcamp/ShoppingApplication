@@ -1,5 +1,6 @@
 package bootcamp.android.presenters;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,13 +15,24 @@ import static org.mockito.Mockito.verify;
 public class ProductDetailsPresenterTest {
 
     @Mock private ProductDetailsView view;
+    private ProductDetailsPresenter presenter;
+    private Product testProduct;
+
+    @Before
+    public void setup(){
+        presenter = new ProductDetailsPresenter(view);
+        testProduct = new Product("Pixel XL", "Best Android Phone Ever.", "dummy://image");
+        presenter.render("Pixel XL", "Best Android Phone Ever.", "dummy://image");
+    }
 
     @Test
     public void renderProductsOnTheScreen(){
-
-        ProductDetailsPresenter presenter = new ProductDetailsPresenter(view);
-        Product testProduct = new Product("Pixel XL", "Best Android Phone Ever.", "dummy://image");
-        presenter.render("Pixel XL", "Best Android Phone Ever.", "dummy://image");
         verify(view).displayProduct(testProduct);
+    }
+
+    @Test
+    public void addToCardAndCloseActivityOnClickingTheAddToCartButton(){
+        presenter.addToCart();
+        verify(view).sendAddToCartResultAndNavigateToPreviousPage(testProduct);
     }
 }

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
               android:gravity="center_horizontal"
               android:padding="15dp"
@@ -26,4 +29,12 @@
     android:layout_height="wrap_content" android:layout_marginTop="15dip"
     android:textSize="24dip"
     android:singleLine="false" android:gravity="center"/>
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/holo_green_dark"
+      android:textColor="@android:color/white"
+      android:onClick="addToCart"
+      android:text="Add To Cart"/>
 </LinearLayout>
+</ScrollView>
