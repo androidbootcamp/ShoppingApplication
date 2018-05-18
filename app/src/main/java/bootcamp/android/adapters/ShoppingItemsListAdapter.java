@@ -1,5 +1,6 @@
 package bootcamp.android.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
 
 import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
+import static bootcamp.android.views.ShoppingItemsListingActivity.PRODUCT_DETAILS_REQUEST_CODE;
 
 public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
   private List<Product> products;
@@ -65,7 +67,7 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
       intent.putExtra(Constants.TITLE_KEY, product.getTitle());
       intent.putExtra(Constants.DESCRIPTION_KEY, product.getDescription());
       intent.putExtra(IMAGE_URL_KEY, product.getImageUrl());
-      context.startActivity(intent);
+      ((Activity)context).startActivityForResult(intent, PRODUCT_DETAILS_REQUEST_CODE);
 
     }
   }

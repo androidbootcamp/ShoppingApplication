@@ -2,12 +2,14 @@ package bootcamp.android.views;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bootcamp.android.R;
@@ -18,9 +20,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static bootcamp.android.constants.Constants.DESCRIPTION_KEY;
+import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
+import static bootcamp.android.constants.Constants.TITLE_KEY;
+
 public class ShoppingItemsListingActivity extends Activity {
 
   private List<Product> products;
+  public static final int PRODUCT_DETAILS_REQUEST_CODE = 9283;
+  private final List<Product> cart = new ArrayList<>();
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -53,5 +61,16 @@ public class ShoppingItemsListingActivity extends Activity {
         progressDialog.dismiss();
       }
     };
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if(resultCode == RESULT_OK){
+      Product cartProduct = new Product(data.getStringExtra(TITLE_KEY),
+              data.getStringExtra(DESCRIPTION_KEY),
+              data.getStringExtra(IMAGE_URL_KEY));
+      cart.add(cartProduct);
+    }
   }
 }
