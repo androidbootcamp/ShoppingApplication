@@ -39,13 +39,10 @@ public class ShoppingItemsListPresenterTest {
     public void renderProductsOnUIOnSuccessfulResponseFromRepository(){
         final Product product = new Product("title", "des", "url");
         final List<Product> list = new ArrayList<Product>(){{add(product);}};
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                final Callback<List<Product>> callback = (Callback<List<Product>>) invocation.getArguments()[0];
-                callback.onResponse(null, Response.success(list));
-                return null;
-            }
+        doAnswer(invocation -> {
+            final Callback<List<Product>> callback = (Callback<List<Product>>) invocation.getArguments()[0];
+            callback.onResponse(null, Response.success(list));
+            return null;
         }).when(repository).getProducts(any(Callback.class));
 
         ShoppingItemsListPresenter presenter = new ShoppingItemsListPresenter(view, repository);
@@ -57,13 +54,10 @@ public class ShoppingItemsListPresenterTest {
     public void showErrorOnRepositoryFailure(){
         final Product product = new Product("title", "des", "url");
         final List<Product> list = new ArrayList<Product>(){{add(product);}};
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                final Callback<List<Product>> callback = (Callback<List<Product>>) invocation.getArguments()[0];
-                callback.onFailure(null, new RuntimeException());
-                return null;
-            }
+        doAnswer(invocation -> {
+            final Callback<List<Product>> callback = (Callback<List<Product>>) invocation.getArguments()[0];
+            callback.onFailure(null, new RuntimeException());
+            return null;
         }).when(repository).getProducts(any(Callback.class));
 
         ShoppingItemsListPresenter presenter = new ShoppingItemsListPresenter(view, repository);
