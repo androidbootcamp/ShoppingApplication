@@ -1,10 +1,8 @@
 package bootcamp.android.views;
 
-import java.util.List;
-
-import bootcamp.android.models.Product;
+import bootcamp.android.viewmodel.ShoppingItemsViewModel;
 
 public interface ShoppingItemsListView {
-    void renderProducts(List<Product> list) ;
+    void renderProducts(ShoppingItemsViewModel list) ;
     void showNetworkError();
 }

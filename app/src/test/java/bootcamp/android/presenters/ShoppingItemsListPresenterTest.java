@@ -12,6 +12,7 @@ import java.util.List;
 
 import bootcamp.android.models.Product;
 import bootcamp.android.repositories.ProductRepository;
+import bootcamp.android.viewmodel.ShoppingItemsViewModel;
 import bootcamp.android.views.ShoppingItemsListView;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,7 +48,7 @@ public class ShoppingItemsListPresenterTest {
 
         ShoppingItemsListPresenter presenter = new ShoppingItemsListPresenter(view, repository);
         presenter.init();
-        verify(view).renderProducts(list);
+        verify(view).renderProducts(new ShoppingItemsViewModel(list,new ArrayList<>()));
     }
 
     @Test

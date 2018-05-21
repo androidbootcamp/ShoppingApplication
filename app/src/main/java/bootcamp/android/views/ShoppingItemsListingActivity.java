@@ -15,6 +15,7 @@ import bootcamp.android.adapters.ShoppingItemsListAdapter;
 import bootcamp.android.models.Product;
 import bootcamp.android.presenters.ShoppingItemsListPresenter;
 import bootcamp.android.repositories.ProductRepository;
+import bootcamp.android.viewmodel.ShoppingItemsViewModel;
 import retrofit2.Callback;
 
 import static bootcamp.android.constants.Constants.DESCRIPTION_KEY;
@@ -24,7 +25,6 @@ import static bootcamp.android.constants.Constants.TITLE_KEY;
 public class ShoppingItemsListingActivity extends Activity implements ShoppingItemsListView {
 
   public static final int PRODUCT_DETAILS_REQUEST_CODE = 9283;
-  private final List<Product> cart = new ArrayList<>();
   private ShoppingItemsListPresenter presenter;
 
   @Override
@@ -43,14 +43,14 @@ public class ShoppingItemsListingActivity extends Activity implements ShoppingIt
       Product cartProduct = new Product(data.getStringExtra(TITLE_KEY),
               data.getStringExtra(DESCRIPTION_KEY),
               data.getStringExtra(IMAGE_URL_KEY));
-      cart.add(cartProduct);
+      presenter.addItemInCart(cartProduct);
     }
   }
 
   @Override
-  public void renderProducts(List<Product> products) {
+  public void renderProducts(ShoppingItemsViewModel products) {
     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-    recyclerView.setAdapter(new ShoppingItemsListAdapter(products));
+    recyclerView.setAdapter(new ShoppingItemsListAdapter(products,presenter));
     recyclerView.setLayoutManager(new GridLayoutManager(ShoppingItemsListingActivity.this, 3));
   }
 
