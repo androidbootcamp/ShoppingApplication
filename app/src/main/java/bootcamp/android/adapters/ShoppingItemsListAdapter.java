@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import bootcamp.android.R;
+import bootcamp.android.presenters.ShoppingItemsListPresenter;
+import bootcamp.android.viewmodel.ProductViewModel;
+import bootcamp.android.viewmodel.ShoppingItemsViewModel;
 import bootcamp.android.views.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
 import bootcamp.android.models.Product;
@@ -23,10 +24,12 @@ import static bootcamp.android.constants.Constants.IMAGE_URL_KEY;
 import static bootcamp.android.views.ShoppingItemsListingActivity.PRODUCT_DETAILS_REQUEST_CODE;
 
 public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder>{
-  private List<Product> products;
+    private final ShoppingItemsListPresenter presenter;
+    private ShoppingItemsViewModel shoppingItemsViewModel;
 
-  public ShoppingItemsListAdapter(List<Product> products) {
-    this.products = products;
+  public ShoppingItemsListAdapter(ShoppingItemsViewModel shoppingItemsViewModel, ShoppingItemsListPresenter presenter) {
+    this.shoppingItemsViewModel = shoppingItemsViewModel;
+    this.presenter= presenter;
   }
 
   @Override
@@ -37,14 +40,18 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
 
   @Override
   public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
-    Product product = products.get(position);
+    ProductViewModel product = shoppingItemsViewModel.getItemsList().get(position);
+      if(product.getInCart())
+          holder.itemView.setBackgroundColor(0xFF00FF00);
+      else
+          holder.itemView.setBackgroundColor(0x00000000);
     holder.titleView.setText(product.getTitle());
     Picasso.get().load(product.getImageUrl()).into(holder.imageView);
   }
 
   @Override
   public int getItemCount() {
-    return products.size();
+    return shoppingItemsViewModel.getItemsList().size();
   }
 
   public class ShoppingItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -63,10 +70,13 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
     public void onClick(View view) {
       Context context = view.getContext();
       Intent intent = new Intent(context.getApplicationContext(), ProductDetailsActivity.class);
-      Product product = products.get(getAdapterPosition());
-      intent.putExtra(Constants.TITLE_KEY, product.getTitle());
-      intent.putExtra(Constants.DESCRIPTION_KEY, product.getDescription());
-      intent.putExtra(IMAGE_URL_KEY, product.getImageUrl());
+      ProductViewModel productViewModel = shoppingItemsViewModel.getItemsList().get(getAdapterPosition());
+      String title = productViewModel.getTitle();
+      intent.putExtra(Constants.TITLE_KEY, title);
+      //assuming product title is unique
+      Product productFromTitle = presenter.getProductFromTitle(title);
+      intent.putExtra(Constants.DESCRIPTION_KEY, productFromTitle.getDescription());
+      intent.putExtra(IMAGE_URL_KEY, productFromTitle.getImageUrl());
       ((Activity)context).startActivityForResult(intent, PRODUCT_DETAILS_REQUEST_CODE);
 
     }

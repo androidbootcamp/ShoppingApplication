@@ -1,19 +1,14 @@
 package bootcamp.android.presenters;
 
-import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import bootcamp.android.R;
-import bootcamp.android.adapters.ShoppingItemsListAdapter;
 import bootcamp.android.models.Product;
 import bootcamp.android.repositories.ProductRepository;
+import bootcamp.android.viewmodel.ShoppingItemsViewModel;
 import bootcamp.android.views.ShoppingItemsListView;
-import bootcamp.android.views.ShoppingItemsListingActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,10 +18,13 @@ public class ShoppingItemsListPresenter {
     private final ShoppingItemsListView view;
     private final ProductRepository repository;
     private  List<Product> products;
+    private List<Product> cart;
+
 
     public ShoppingItemsListPresenter(ShoppingItemsListView view, ProductRepository repository) {
         this.view = view;
         this.repository = repository;
+        this.cart = new ArrayList<>();
     }
 
     public void init(){
@@ -39,7 +37,7 @@ public class ShoppingItemsListPresenter {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 products = response.body();
-                view.renderProducts(products);
+                renderViewModel();
             }
 
             @Override
@@ -49,4 +47,21 @@ public class ShoppingItemsListPresenter {
         };
     }
 
+    private void renderViewModel() {
+        ShoppingItemsViewModel shoppingItemsViewModel = new ShoppingItemsViewModel(products,cart);
+        view.renderProducts(shoppingItemsViewModel);
+    }
+
+    public void addItemInCart(Product cartProduct) {
+        cart.add(cartProduct);
+        renderViewModel();
+    }
+
+    public Product getProductFromTitle(String title) {
+        for (Product product :products){
+            if(product.getTitle().equals(title))
+                return product;
+        }
+        return null;
+    }
 }
