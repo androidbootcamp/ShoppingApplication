@@ -23,6 +23,17 @@ import static bootcamp.android.constants.Constants.*;
 public class ShoppingItemsListingActivity extends Activity {
 
   private ArrayList<Product> products;
+  private ProductRepository productRepository;
+
+  public ShoppingItemsListingActivity() {
+    super();
+    productRepository = new ProductRepository();
+  }
+
+  ShoppingItemsListingActivity(ProductRepository productRepository) {
+    super();
+    this.productRepository = productRepository;
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +42,6 @@ public class ShoppingItemsListingActivity extends Activity {
     if(savedInstanceState == null || savedInstanceState.getParcelableArrayList(PRODUCTS_KEY) == null){
       final ProgressDialog progressDialog = ProgressDialog.show(this, "", "Loading...", true, true);
       Callback<ArrayList<Product>> callback = productsCallback(progressDialog);
-      ProductRepository productRepository = new ProductRepository();
       productRepository.getProducts(callback);
     } else {
       products = savedInstanceState.getParcelableArrayList(PRODUCTS_KEY);
