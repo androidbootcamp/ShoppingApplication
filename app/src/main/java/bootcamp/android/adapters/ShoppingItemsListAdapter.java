@@ -2,6 +2,7 @@ package bootcamp.android.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import bootcamp.android.R;
 import bootcamp.android.activities.ProductDetailsActivity;
 import bootcamp.android.constants.Constants;
+import bootcamp.android.databinding.ProductBinding;
 import bootcamp.android.models.Product;
 
 public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItemsListAdapter.ShoppingItemViewHolder> {
@@ -28,15 +29,16 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
 
   @Override
   public ShoppingItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View productItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.product, parent, false);
-    return new ShoppingItemViewHolder(productItemView);
+      ProductBinding itemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.product, parent, false);
+      return new ShoppingItemViewHolder(itemBinding);
   }
 
   @Override
   public void onBindViewHolder(ShoppingItemViewHolder holder, int position) {
     Product product = products.get(position);
-    holder.titleView.setText(product.getTitle());
-    Picasso.with(holder.imageView.getContext()).load(product.getImageUrl()).into(holder.imageView);
+    holder.productBinding.setProduct(product);
+    holder.productBinding.executePendingBindings();
+    Picasso.with(holder.productBinding.imageView.getContext()).load(product.getImageUrl()).into(holder.productBinding.imageView);
   }
 
   @Override
@@ -46,13 +48,11 @@ public class ShoppingItemsListAdapter extends RecyclerView.Adapter<ShoppingItems
 
   public class ShoppingItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private final TextView titleView;
-    private final ImageView imageView;
+    private final ProductBinding productBinding;
 
-    public ShoppingItemViewHolder(View itemView) {
-      super(itemView);
-      titleView = (TextView) itemView.findViewById(R.id.title);
-      imageView = (ImageView) itemView.findViewById(R.id.imageView);
+    public ShoppingItemViewHolder(ProductBinding productBinding) {
+      super(productBinding.getRoot());
+      this.productBinding = productBinding;
       itemView.setOnClickListener(this);
     }
 
