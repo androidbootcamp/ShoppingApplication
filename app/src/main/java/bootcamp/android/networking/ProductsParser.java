@@ -1,4 +1,4 @@
-package bootcamp.android.services;
+package bootcamp.android.networking;
 
 import bootcamp.android.models.Product;
 import org.json.JSONArray;
